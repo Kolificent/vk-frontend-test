@@ -17,6 +17,7 @@
       "@api/*": ["src/api/*"],
       "@assets/*": ["src/assets/*"],
       "@pages/*": ["src/pages/*"],
+      "@hooks/*": ["src/hooks/*"],
       "@app/*": ["src/app/*"],
       "@selectors/*": ["src/redux/selectors/*"]
     },

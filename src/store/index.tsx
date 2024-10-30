@@ -6,6 +6,8 @@ import { Film, Pagination } from '@types';
 
 class FilmsStore {
   films = DEFAULT_FILMS_LIST.films;
+  editedFilmIds: number[] = [];
+  editedFilmsInfo = DEFAULT_FILMS_LIST.films;
   isLoading = false;
   error: string | null = null;
   sort = DEFAULT_PAGINATION.sort;
@@ -16,7 +18,7 @@ class FilmsStore {
     makeAutoObservable(this);
   }
 
-  async updateFilms() {
+  async fetchFilms() {
     this.isLoading = true;
     try {
       const filmsData = await FilmsAPI.getFilms({
@@ -25,15 +27,23 @@ class FilmsStore {
         isOrderAscending: this.isOrderAscending,
       });
       if (filmsData) {
-        if (this.page === 1) {
+        const filmsList = filmsData.data.results.map((film) => ({
+          id: film.id,
+          poster_path: film.poster_path,
+          title: film.title,
+          vote_average: film.vote_average,
+        }));
+
+        if (this.page === DEFAULT_PAGINATION.page) {
           runInAction(() => {
-            this.films = filmsData.data.results;
+            this.films = filmsList;
           });
         } else {
           runInAction(() => {
-            this.films = [...this.films, ...filmsData.data.results];
+            this.films = [...this.films, ...filmsList];
           });
         }
+        this.validateFilms();
       }
     } catch (error: any) {
       runInAction(() => {
@@ -46,13 +56,21 @@ class FilmsStore {
     }
   }
 
+  validateFilms() {
+    const localFilmsList = this.films.map((film: Film) =>
+      this.editedFilmIds.includes(film.id)
+        ? this.editedFilmsInfo.find((editedFilm) => editedFilm.id === film.id)
+        : film,
+    ) as Film[];
+    this.films = localFilmsList;
+  }
+
   deleteFilm(id: Film['id']) {
     this.films = this.films.filter((film) => film.id !== id);
   }
-
-  changePage(newPage: number) {
-    this.page = newPage;
-    this.updateFilms(); // Fetch new films when page changes
+  editFilm(film: Film) {
+    this.editedFilmIds = [...this.editedFilmIds, film.id];
+    this.editedFilmsInfo = [...this.editedFilmsInfo, film];
   }
 
   resetPagination() {
@@ -64,18 +82,18 @@ class FilmsStore {
   changeSort(sort: Pagination['sort']) {
     this.sort = sort;
     this.page = DEFAULT_PAGINATION.page;
-    this.updateFilms(); // Fetch new films when sort changes
+    this.fetchFilms();
   }
 
   changeOrder(isOrderAscending: Pagination['isOrderAscending']) {
     this.isOrderAscending = isOrderAscending;
     this.page = DEFAULT_PAGINATION.page;
-    this.updateFilms(); // Fetch new films when order changes
+    this.fetchFilms();
   }
 
   changeCurrentPage() {
     this.page += 1;
-    this.updateFilms(); // Fetch new films when page increases
+    this.fetchFilms();
   }
 }
 

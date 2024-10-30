@@ -34,11 +34,18 @@ function FilmCard({ id, poster_path, vote_average, title }: Film) {
   }
 
   function handleConfirmButton() {
+    filmsStore.editFilm({
+      id,
+      poster_path,
+      title: editedTitle,
+      vote_average: editedVoteAverage,
+    });
     setIsEditing(false);
   }
 
   function handleCancelButton() {
     setIsEditing(false);
+    // !
     setEditedTitle(title);
     setEditedVoteAverage(vote_average);
   }

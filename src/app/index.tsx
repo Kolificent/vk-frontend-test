@@ -23,15 +23,6 @@ function App() {
       >
         <FilmsGrid />
       </Container>
-      <Box
-        component="main"
-        display="flex"
-        flexDirection="row"
-        gap={3}
-        p={3}
-        width="100%"
-        flexGrow={1}
-      ></Box>
     </Box>
   );
 }
