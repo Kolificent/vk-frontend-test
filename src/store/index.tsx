@@ -39,7 +39,7 @@ class FilmsStore {
           runInAction(() => {
             this.films = filmsList;
           });
-        } else {
+        } else if (this.page > 1) {
           runInAction(() => {
             this.films = [...this.films, ...filmsList];
           });
@@ -70,6 +70,7 @@ class FilmsStore {
 
   deleteFilm(id: Film['id']) {
     this.deletedFilmIds = [...this.deletedFilmIds, id];
+    this.validateFilms();
   }
   editFilm(film: Film) {
     if (this.editedFilmIds.includes(film.id)) {
@@ -83,21 +84,18 @@ class FilmsStore {
       this.editedFilmIds = [...this.editedFilmIds, film.id];
       this.editedFilmsInfo = [...this.editedFilmsInfo, film];
     }
-  }
-
-  resetPagination() {
-    this.sort = DEFAULT_PAGINATION.sort;
-    this.isOrderAscending = DEFAULT_PAGINATION.isOrderAscending;
-    this.page = DEFAULT_PAGINATION.page;
+    this.validateFilms();
   }
 
   changeSort(sort: Pagination['sort']) {
+    this.films = DEFAULT_FILMS_LIST.films;
     this.sort = sort;
     this.page = DEFAULT_PAGINATION.page;
     this.fetchFilms();
   }
 
   changeOrder(isOrderAscending: Pagination['isOrderAscending']) {
+    this.films = DEFAULT_FILMS_LIST.films;
     this.isOrderAscending = isOrderAscending;
     this.page = DEFAULT_PAGINATION.page;
     this.fetchFilms();
