@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { SORT_OPTIONS } from '@constants';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
-import { filmsStore } from '@store';
+import { filmsStore } from '@store/filmsStore';
 import { observer } from 'mobx-react-lite';
 
 const SORT_LABEL = 'Сортировать по';

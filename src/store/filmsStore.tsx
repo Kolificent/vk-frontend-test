@@ -41,7 +41,6 @@ class FilmsStore {
           });
         } else if (this.page > 1) {
           runInAction(() => {
-            console.log(filmsList);
             this.films = [...this.films, ...filmsList];
           });
         }

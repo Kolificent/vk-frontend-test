@@ -16,7 +16,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { Film } from '@types';
 
 import { useState } from 'react';
-import { filmsStore } from '@store';
+import { filmsStore } from '@store/filmsStore';
 
 function FilmCard({ id, poster_path, vote_average, title }: Film) {
   const [isEditing, setIsEditing] = useState(false);
@@ -48,6 +48,9 @@ function FilmCard({ id, poster_path, vote_average, title }: Film) {
     setEditedVoteAverage(vote_average);
   }
 
+  const isTitleHaveLongWord =
+    title.split(' ').filter((word) => word.length > 20).length > 0;
+
   return (
     <Card>
       <Paper>
@@ -75,9 +78,15 @@ function FilmCard({ id, poster_path, vote_average, title }: Film) {
               </>
             ) : (
               <>
-                <Typography variant="h3" component="h3" fontSize="20px">
-                  {title}
-                </Typography>
+                {isTitleHaveLongWord ? (
+                  <Typography variant="h3" component="h3" fontSize="20px">
+                    {title.length > 10 ? title.slice(0, 10) + '...' : title}
+                  </Typography>
+                ) : (
+                  <Typography variant="h3" component="h3" fontSize="20px">
+                    {title}
+                  </Typography>
+                )}
                 <Typography fontSize="14px" variant="caption">
                   {vote_average ? `Рейтинг ${vote_average}` : 'Нет оценок'}
                 </Typography>

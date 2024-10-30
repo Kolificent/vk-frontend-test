@@ -9,7 +9,6 @@ function buildFilmsQueryParams(pagination: Pagination) {
   const queryParameters = [
     `include_adult=false`,
     `include_video=false`,
-    `language=ru-RU`,
     `page=${page}`,
     `sort_by=${sortOption}.${order}`,
     sort === 1 ? 'vote_count.gte=200' : '',

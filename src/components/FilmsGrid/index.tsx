@@ -1,7 +1,7 @@
 import { Box, Button, CircularProgress, Grid, IconButton } from '@mui/material';
 import { useEffect, useState } from 'react';
 import FilmCard from './FilmCard';
-import { filmsStore } from '@store';
+import { filmsStore } from '@store/filmsStore';
 import { observer } from 'mobx-react-lite';
 import useThrottle from '@hooks/useThrottle';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -39,9 +39,6 @@ const FilmsGrid = observer(() => {
     setShowScrollTop(top > 400);
 
     if (windowHeight + top + 400 >= height) {
-      console.log('FETCH!');
-      console.log(page);
-
       filmsStore.changeCurrentPage();
     }
   }

@@ -2,8 +2,20 @@ import { Box, Container, CssBaseline } from '@mui/material';
 // import LoginDialog from '@components/dialogs/LoginDialog';
 import FilmsGrid from '@components/FilmsGrid';
 import FilmsAppBar from '@components/FilmsAppBar';
+import AuthDialog from '@components/dialogs/AuthDialog';
+import { getAuthToken } from '@utils/authToken';
 
 function App() {
+  const isUserAuthenticated = Boolean(getAuthToken());
+
+  const content = isUserAuthenticated ? (
+    <FilmsGrid />
+  ) : (
+    <Box display="flex" justifyContent="center" alignItems="center">
+      <i>Необходимо провести аутентификацию (сверху справа)</i>
+    </Box>
+  );
+
   return (
     <Box
       display="flex"
@@ -13,7 +25,7 @@ function App() {
       height="100dvh"
     >
       <CssBaseline />
-      {/*<LoginDialog /> */}
+      <AuthDialog />
       <FilmsAppBar />
       <Container
         maxWidth="lg"
@@ -21,7 +33,7 @@ function App() {
           padding: 1,
         }}
       >
-        <FilmsGrid />
+        {content}
       </Container>
     </Box>
   );
