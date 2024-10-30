@@ -1,7 +1,6 @@
 import {
   Box,
   Card,
-  CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
@@ -10,7 +9,6 @@ import {
   Paper,
   Typography,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
@@ -53,16 +51,12 @@ function FilmCard({ id, poster_path, vote_average, title }: Film) {
   return (
     <Card>
       <Paper>
-        <CardActionArea>
-          <Link to={`../film/${id}`} relative="path">
-            <CardMedia
-              sx={{ height: '400px' }}
-              component="img"
-              image={'https://image.tmdb.org/t/p/w400' + poster_path}
-              alt={title}
-            />
-          </Link>
-        </CardActionArea>
+        <CardMedia
+          sx={{ height: '400px' }}
+          component="img"
+          image={'https://image.tmdb.org/t/p/w400' + poster_path}
+          alt={title}
+        />
         <Box display="flex">
           <CardContent sx={{ flexGrow: 1 }}>
             {isEditing ? (
@@ -74,8 +68,9 @@ function FilmCard({ id, poster_path, vote_average, title }: Film) {
                 />
                 <Input
                   value={editedVoteAverage}
+                  type="number"
                   inputProps={{ 'aria-label': 'description' }}
-                  onChange={(e) => setEditedVoteAverage(e.target.value)}
+                  onChange={(e) => setEditedVoteAverage(+e.target.value)}
                 />
               </>
             ) : (

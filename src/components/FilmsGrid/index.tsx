@@ -11,6 +11,7 @@ const FilmsGrid = observer(() => {
   const error = filmsStore.error;
   const isOrderAscending = filmsStore.isOrderAscending;
   const editedFilmIds = filmsStore.editedFilmIds;
+  const deletedFilmIds = filmsStore.deletedFilmIds;
   const editedFilmsInfo = filmsStore.editedFilmsInfo;
 
   useEffect(() => {
@@ -19,7 +20,7 @@ const FilmsGrid = observer(() => {
 
   useEffect(() => {
     filmsStore.validateFilms();
-  }, [editedFilmIds, editedFilmsInfo]);
+  }, [editedFilmIds, editedFilmsInfo, deletedFilmIds]);
 
   useEffect(() => {
     // ! переделать
@@ -28,7 +29,7 @@ const FilmsGrid = observer(() => {
 
   const films = filmsStore.films;
 
-  const throttledHandleScroll = useThrottle(handleScroll, 50);
+  const throttledHandleScroll = useThrottle(handleScroll, 40);
 
   function handleScroll() {
     const height = document.documentElement.scrollHeight;
@@ -36,6 +37,7 @@ const FilmsGrid = observer(() => {
     const windowHeight = window.innerHeight;
 
     if (windowHeight + top + 600 >= height) {
+      console.log('FETCH!');
       filmsStore.changeCurrentPage();
     }
   }

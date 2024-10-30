@@ -16,7 +16,7 @@ function App() {
       {/*<LoginDialog /> */}
       <FilmsAppBar />
       <Container
-        maxWidth="lg" // Это ограничит ширину контейнера на больших экранах
+        maxWidth="lg"
         sx={{
           padding: 1,
         }}

@@ -25,7 +25,6 @@ interface FilmCardProps {
 }
 
 interface FilmsListFetch {
-  // ! поменять потом
   films: Film[];
   isLoading: boolean;
   error: string | null;

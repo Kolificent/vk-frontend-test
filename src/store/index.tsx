@@ -7,6 +7,7 @@ import { Film, Pagination } from '@types';
 class FilmsStore {
   films = DEFAULT_FILMS_LIST.films;
   editedFilmIds: number[] = [];
+  deletedFilmIds: number[] = [];
   editedFilmsInfo = DEFAULT_FILMS_LIST.films;
   isLoading = false;
   error: string | null = null;
@@ -57,20 +58,31 @@ class FilmsStore {
   }
 
   validateFilms() {
-    const localFilmsList = this.films.map((film: Film) =>
-      this.editedFilmIds.includes(film.id)
-        ? this.editedFilmsInfo.find((editedFilm) => editedFilm.id === film.id)
-        : film,
-    ) as Film[];
+    const localFilmsList = this.films
+      .filter((film) => !this.deletedFilmIds.includes(film.id))
+      .map((film: Film) =>
+        this.editedFilmIds.includes(film.id)
+          ? this.editedFilmsInfo.find((editedFilm) => editedFilm.id === film.id)
+          : film,
+      ) as Film[];
     this.films = localFilmsList;
   }
 
   deleteFilm(id: Film['id']) {
-    this.films = this.films.filter((film) => film.id !== id);
+    this.deletedFilmIds = [...this.deletedFilmIds, id];
   }
   editFilm(film: Film) {
-    this.editedFilmIds = [...this.editedFilmIds, film.id];
-    this.editedFilmsInfo = [...this.editedFilmsInfo, film];
+    if (this.editedFilmIds.includes(film.id)) {
+      this.editedFilmsInfo = [
+        ...this.editedFilmsInfo.filter(
+          (editedFilm) => editedFilm.id !== film.id,
+        ),
+        film,
+      ];
+    } else {
+      this.editedFilmIds = [...this.editedFilmIds, film.id];
+      this.editedFilmsInfo = [...this.editedFilmsInfo, film];
+    }
   }
 
   resetPagination() {
