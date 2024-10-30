@@ -11,6 +11,8 @@ import dialogStore from '@store/dialogStore';
 import { setAuthToken } from '@utils/authToken';
 import { observer } from 'mobx-react-lite';
 
+const TMDB_AUTH_URL = 'https://developer.themoviedb.org/docs/getting-started';
+
 const AuthDialog = observer(() => {
   const isOpen = dialogStore.isOpen;
 
@@ -41,20 +43,25 @@ const AuthDialog = observer(() => {
         onSubmit: handleSubmit,
       }}
     >
-      <DialogTitle>Вход</DialogTitle>
+      <DialogTitle>Аутентификация</DialogTitle>
       <DialogContent>
         <DialogContentText>
           В проекте используется известный сервис с базой данных фильмов TMDB.
+          <br />
+          <br />
           Получить токен аутентификации можно здесь:
-        </DialogContentText>
-        <DialogContentText>
-          <a
-            href="https://developer.themoviedb.org/docs/getting-started"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            https://developer.themoviedb.org/docs/getting-started
+          <br />
+          <a href={TMDB_AUTH_URL} target="_blank" rel="noopener noreferrer">
+            {TMDB_AUTH_URL}
           </a>
+          <br />
+          <br />
+          <b>
+            <i>
+              Существует вероятность того, что для работы сервиса понадобится
+              использовать VPN!
+            </i>
+          </b>
         </DialogContentText>
         <TextField
           autoFocus

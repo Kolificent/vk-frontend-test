@@ -28,7 +28,7 @@ class FilmsStore {
       });
 
       if (filmsData?.status === 200) {
-        const filmsList = filmsData.data.results.map((film) => ({
+        const filmsList = filmsData.data.results.map((film: any) => ({
           id: film.id,
           poster_path: film.poster_path,
           title: film.title,
