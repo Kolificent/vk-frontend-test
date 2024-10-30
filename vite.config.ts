@@ -16,6 +16,7 @@ export default defineConfig({
       '@pages': path.resolve(__dirname, './src/pages'),
       '@api': path.resolve(__dirname, './src/api'),
       '@assets': path.resolve(__dirname, './src/assets'),
+      '@app': path.resolve(__dirname, './src/app'),
       '@slices': path.resolve(__dirname, './src/redux/slices'),
       '@selectors': path.resolve(__dirname, './src/redux/selectors'),
     },

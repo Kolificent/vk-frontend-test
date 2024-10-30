@@ -10,11 +10,25 @@ interface Pagination {
   isOrderAscending: boolean;
 }
 
+interface Film {
+  id: number;
+  title: string;
+  vote_average: number;
+  poster_path: string;
+}
+
+interface FilmCardProps {
+  id: Film['id'];
+  title: Film['title'];
+  vote_average: Film['vote_average'];
+  poster_path: Film['poster_path'];
+}
+
 interface FilmsListFetch {
   // ! поменять потом
-  films: [];
+  films: Film[];
   isLoading: boolean;
   error: string | null;
 }
 
-export type { SortOption, Pagination, FilmsListFetch };
+export type { SortOption, Film, FilmCardProps, Pagination, FilmsListFetch };

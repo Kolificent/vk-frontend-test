@@ -4,7 +4,7 @@ import apiClient from './axios';
 import buildFilmsQueryParams from '@utils/buildFilmsQueryParams';
 
 const FilmsAPI = {
-  getAdvertisements: async (pagination: Pagination) => {
+  getFilms: async (pagination: Pagination) => {
     try {
       const response = await apiClient.get(buildFilmsQueryParams(pagination));
       return response;

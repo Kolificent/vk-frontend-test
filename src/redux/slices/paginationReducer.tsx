@@ -24,10 +24,10 @@ const paginationSlice = createSlice({
         pages: DEFAULT_PAGINATION.page,
       };
     },
-    changeCurrentPage: (state, action: PayloadAction<Pagination['page']>) => {
+    changeCurrentPage: (state) => {
       return {
         ...state,
-        page: action.payload,
+        page: state.page + 1,
       };
     },
   },
