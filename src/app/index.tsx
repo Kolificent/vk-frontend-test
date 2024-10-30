@@ -1,5 +1,4 @@
 import { Box, Container, CssBaseline } from '@mui/material';
-// import LoginDialog from '@components/dialogs/LoginDialog';
 import FilmsGrid from '@components/FilmsGrid';
 import FilmsAppBar from '@components/FilmsAppBar';
 import AuthDialog from '@components/dialogs/AuthDialog';
@@ -8,7 +7,7 @@ import { getAuthToken } from '@utils/authToken';
 function App() {
   const isUserAuthenticated = Boolean(getAuthToken());
 
-  const content = isUserAuthenticated ? (
+  const appContent = isUserAuthenticated ? (
     <FilmsGrid />
   ) : (
     <Box display="flex" justifyContent="center" alignItems="center">
@@ -22,7 +21,7 @@ function App() {
       flexDirection="column"
       alignContent="column"
       width={1}
-      height="100dvh"
+      height="100vh"
     >
       <CssBaseline />
       <AuthDialog />
@@ -33,7 +32,7 @@ function App() {
           padding: 1,
         }}
       >
-        {content}
+        {appContent}
       </Container>
     </Box>
   );

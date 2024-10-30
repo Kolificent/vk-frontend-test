@@ -13,15 +13,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
+import { CARD_HEIGHT } from '@constants';
 import { Film } from '@types';
-
-import { useState } from 'react';
 import { filmsStore } from '@store/filmsStore';
+import { useState } from 'react';
 
 function FilmCard({ id, poster_path, vote_average, title }: Film) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedTitle, setEditedTitle] = useState(title);
-  const [editedVoteAverage, setEditedVoteAverage] = useState(vote_average);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [tempTitle, setTempTitle] = useState<string>(title);
+  const [tempVoteAverage, setTempVoteAverage] = useState<number>(vote_average);
 
   function handleDeleteButton() {
     filmsStore.deleteFilm(id);
@@ -35,27 +35,28 @@ function FilmCard({ id, poster_path, vote_average, title }: Film) {
     filmsStore.editFilm({
       id,
       poster_path,
-      title: editedTitle,
-      vote_average: editedVoteAverage,
+      title: tempTitle,
+      vote_average: tempVoteAverage,
     });
     setIsEditing(false);
   }
 
   function handleCancelButton() {
     setIsEditing(false);
-    // !
-    setEditedTitle(title);
-    setEditedVoteAverage(vote_average);
+    setTempTitle(title);
+    setTempVoteAverage(vote_average);
   }
 
-  const isTitleHaveLongWord =
-    title.split(' ').filter((word) => word.length > 20).length > 0;
+  const maxWordLength = 20;
+  const isTitleWordsLong = title
+    .split(' ')
+    .some((word) => word.length > maxWordLength);
 
   return (
     <Card>
       <Paper>
         <CardMedia
-          sx={{ height: '400px' }}
+          sx={{ height: CARD_HEIGHT }}
           component="img"
           image={'https://image.tmdb.org/t/p/w400' + poster_path}
           alt={title}
@@ -65,20 +66,20 @@ function FilmCard({ id, poster_path, vote_average, title }: Film) {
             {isEditing ? (
               <>
                 <Input
-                  value={editedTitle}
+                  value={tempTitle}
                   inputProps={{ 'aria-label': 'description' }}
-                  onChange={(e) => setEditedTitle(e.target.value)}
+                  onChange={(e) => setTempTitle(e.target.value)}
                 />
                 <Input
-                  value={editedVoteAverage}
+                  value={tempVoteAverage}
                   type="number"
                   inputProps={{ 'aria-label': 'description' }}
-                  onChange={(e) => setEditedVoteAverage(+e.target.value)}
+                  onChange={(e) => setTempVoteAverage(+e.target.value)}
                 />
               </>
             ) : (
               <>
-                {isTitleHaveLongWord ? (
+                {isTitleWordsLong ? (
                   <Typography variant="h3" component="h3" fontSize="20px">
                     {title.length > 10 ? title.slice(0, 10) + '...' : title}
                   </Typography>

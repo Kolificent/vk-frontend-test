@@ -1,18 +1,17 @@
-// stores/combinedStore.ts
-import { makeAutoObservable, runInAction } from 'mobx';
 import FilmsAPI from '@api/filmsApi';
 import { DEFAULT_FILMS_LIST, DEFAULT_PAGINATION } from '@constants';
 import { Film, Pagination } from '@types';
+import { makeAutoObservable, runInAction } from 'mobx';
 
 class FilmsStore {
   films = DEFAULT_FILMS_LIST.films;
-  editedFilmIds: number[] = [];
-  deletedFilmIds: number[] = [];
-  editedFilmsInfo = DEFAULT_FILMS_LIST.films;
-  isLoading = false;
-  error: string | null = null;
+  isLoading = DEFAULT_FILMS_LIST.isLoading;
+  error = DEFAULT_FILMS_LIST.error;
   sort = DEFAULT_PAGINATION.sort;
   isOrderAscending = DEFAULT_PAGINATION.isOrderAscending;
+  editedFilmIds: Array<Film['id']> = [];
+  deletedFilmIds: Array<Film['id']> = [];
+  editedFilmsInfo = DEFAULT_FILMS_LIST.films;
   page = DEFAULT_PAGINATION.page;
 
   constructor() {
@@ -27,7 +26,8 @@ class FilmsStore {
         sort: this.sort,
         isOrderAscending: this.isOrderAscending,
       });
-      if (filmsData) {
+
+      if (filmsData?.status === 200) {
         const filmsList = filmsData.data.results.map((film) => ({
           id: film.id,
           poster_path: film.poster_path,
@@ -35,15 +35,14 @@ class FilmsStore {
           vote_average: film.vote_average,
         }));
 
-        if (this.page === DEFAULT_PAGINATION.page) {
-          runInAction(() => {
+        runInAction(() => {
+          if (this.page === DEFAULT_PAGINATION.page) {
             this.films = filmsList;
-          });
-        } else if (this.page > 1) {
-          runInAction(() => {
+          } else {
             this.films = [...this.films, ...filmsList];
-          });
-        }
+          }
+        });
+
         this.validateFilms();
       }
     } catch (error: any) {
@@ -58,22 +57,27 @@ class FilmsStore {
   }
 
   validateFilms() {
-    const localFilmsList = this.films
-      .filter((film) => !this.deletedFilmIds.includes(film.id))
-      .map((film: Film) =>
-        this.editedFilmIds.includes(film.id)
-          ? this.editedFilmsInfo.find((editedFilm) => editedFilm.id === film.id)
-          : film,
-      ) as Film[];
-    this.films = localFilmsList;
+    const remainingFilms = this.films.filter(
+      (film) => !this.deletedFilmIds.includes(film.id),
+    );
+
+    const localFilms = remainingFilms.map((film: Film) => {
+      const isFilmEdited = this.editedFilmIds.includes(film.id);
+      return isFilmEdited
+        ? this.editedFilmsInfo.find((editedFilm) => editedFilm.id === film.id)
+        : film;
+    }) as Array<Film>;
+    this.films = localFilms;
   }
 
   deleteFilm(id: Film['id']) {
     this.deletedFilmIds = [...this.deletedFilmIds, id];
     this.validateFilms();
   }
+
   editFilm(film: Film) {
-    if (this.editedFilmIds.includes(film.id)) {
+    const isFilmEdited = this.editedFilmIds.includes(film.id);
+    if (isFilmEdited) {
       this.editedFilmsInfo = [
         ...this.editedFilmsInfo.filter(
           (editedFilm) => editedFilm.id !== film.id,

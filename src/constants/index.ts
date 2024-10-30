@@ -12,6 +12,8 @@ export const DEFAULT_PAGINATION: Pagination = {
   page: 1,
 };
 
+export const CARD_HEIGHT = 400;
+
 export const DEFAULT_FILMS_LIST: FilmsListFetch = {
   films: [],
   isLoading: false,

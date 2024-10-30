@@ -18,10 +18,13 @@ const AuthDialog = observer(() => {
     dialogStore.closeDialog();
   }
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const formJson = Object.fromEntries(formData.entries());
+    const formJson = Object.fromEntries(formData.entries()) as Record<
+      string,
+      string
+    >;
     const token = formJson.token as string;
     setAuthToken(token);
 
@@ -45,7 +48,11 @@ const AuthDialog = observer(() => {
           Получить токен аутентификации можно здесь:
         </DialogContentText>
         <DialogContentText>
-          <a href="https://developer.themoviedb.org/docs/getting-started">
+          <a
+            href="https://developer.themoviedb.org/docs/getting-started"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             https://developer.themoviedb.org/docs/getting-started
           </a>
         </DialogContentText>

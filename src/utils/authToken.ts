@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 
-function getAuthToken() {
+function getAuthToken(): string | undefined {
   return Cookies.get('token');
 }
 

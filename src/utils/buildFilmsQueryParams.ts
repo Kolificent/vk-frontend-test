@@ -12,7 +12,6 @@ function buildFilmsQueryParams(pagination: Pagination) {
     `page=${page}`,
     `sort_by=${sortOption}.${order}`,
     sort === 1 ? 'vote_count.gte=200' : '',
-    `without_genres=99,10755`,
   ].join('&');
 
   return `discover/movie?${queryParameters}`;

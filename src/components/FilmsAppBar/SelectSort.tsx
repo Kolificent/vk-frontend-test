@@ -7,23 +7,22 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material';
-import { SORT_OPTIONS } from '@constants';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
-import { filmsStore } from '@store/filmsStore';
+import { SORT_OPTIONS } from '@constants';
+import useSort from '@hooks/useSort';
 import { observer } from 'mobx-react-lite';
 
 const SORT_LABEL = 'Сортировать по';
 
 const SelectSort = observer(() => {
-  const sort = filmsStore.sort;
-  const isOrderAscending = filmsStore.isOrderAscending;
+  const { sort, isOrderAscending, changeSort, toggleOrder } = useSort();
 
   function handleChangeSort(e: SelectChangeEvent) {
-    filmsStore.changeSort(+e.target.value);
+    changeSort(+e.target.value);
   }
 
   function handleOrderButton() {
-    filmsStore.changeOrder(!isOrderAscending);
+    toggleOrder();
   }
 
   return (

@@ -1,47 +1,45 @@
-import { Box, Button, CircularProgress, Grid, IconButton } from '@mui/material';
-import { useEffect, useState } from 'react';
-import FilmCard from './FilmCard';
+import { Box, Button, CircularProgress, Grid } from '@mui/material';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { CARD_HEIGHT } from '@constants';
+import useThrottle from '@hooks/useThrottle';
 import { filmsStore } from '@store/filmsStore';
 import { observer } from 'mobx-react-lite';
-import useThrottle from '@hooks/useThrottle';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { useEffect, useState } from 'react';
+import FilmCard from './FilmCard';
 
 const FilmsGrid = observer(() => {
-  const sort = filmsStore.sort;
+  const films = filmsStore.films;
   const isLoading = filmsStore.isLoading;
   const error = filmsStore.error;
-  const page = filmsStore.page;
+  const sort = filmsStore.sort;
   const isOrderAscending = filmsStore.isOrderAscending;
-  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isScrollButtonVisible, setIsScrollButtonVisible] =
+    useState<boolean>(false);
 
   useEffect(() => {
     filmsStore.fetchFilms();
   }, []);
 
   useEffect(() => {
-    // ! переделать
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToTop();
   }, [sort, isOrderAscending]);
 
-  const films = filmsStore.films;
-
-  const throttledHandleScroll = useThrottle(handleScroll, 40);
-
-  const scrollToTop = () => {
+  function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  }
 
   function handleScroll() {
     const height = document.documentElement.scrollHeight;
     const top = document.documentElement.scrollTop;
     const windowHeight = window.innerHeight;
 
-    setShowScrollTop(top > 400);
-
-    if (windowHeight + top + 400 >= height) {
+    setIsScrollButtonVisible(top > CARD_HEIGHT);
+    if (windowHeight + top + CARD_HEIGHT >= height) {
       filmsStore.changeCurrentPage();
     }
   }
+
+  const throttledHandleScroll = useThrottle(handleScroll, 40);
 
   useEffect(() => {
     window.addEventListener('scroll', throttledHandleScroll);
@@ -77,19 +75,21 @@ const FilmsGrid = observer(() => {
           <CircularProgress />
         </Box>
       )}
-      {showScrollTop && (
-        <IconButton
+      {isScrollButtonVisible && (
+        <Button
+          variant="contained"
+          startIcon={<ArrowUpwardIcon />}
           color="primary"
           onClick={scrollToTop}
           style={{
             position: 'fixed',
             bottom: '2rem',
             right: '2rem',
-            zIndex: 1000, // Ensures the button is above other elements
+            zIndex: 1000,
           }}
         >
-          <ArrowUpwardIcon />
-        </IconButton>
+          Наверх
+        </Button>
       )}
     </Box>
   );
