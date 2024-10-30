@@ -10,6 +10,7 @@ const FilmsGrid = observer(() => {
   const sort = filmsStore.sort;
   const isLoading = filmsStore.isLoading;
   const error = filmsStore.error;
+  const page = filmsStore.page;
   const isOrderAscending = filmsStore.isOrderAscending;
   const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -39,6 +40,8 @@ const FilmsGrid = observer(() => {
 
     if (windowHeight + top + 400 >= height) {
       console.log('FETCH!');
+      console.log(page);
+
       filmsStore.changeCurrentPage();
     }
   }

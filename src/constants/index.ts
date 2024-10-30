@@ -9,7 +9,7 @@ export const SORT_OPTIONS: Array<SortOption> = [
 export const DEFAULT_PAGINATION: Pagination = {
   sort: 0,
   isOrderAscending: false,
-  page: 0,
+  page: 1,
 };
 
 export const DEFAULT_FILMS_LIST: FilmsListFetch = {
