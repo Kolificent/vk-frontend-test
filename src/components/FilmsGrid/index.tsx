@@ -1,35 +1,25 @@
-import { Box, CircularProgress, Grid } from '@mui/material';
+import { CircularProgress, Grid } from '@mui/material';
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '@store';
-import { updateFilms } from '@slices/filmsReducer';
-import {
-  selectIsOrderAscending,
-  selectPage,
-  selectSort,
-} from '@selectors/pagination';
-import { selectFilms } from '@selectors/films';
 import FilmCard from './FilmCard';
-import { changeCurrentPage } from '@slices/paginationReducer';
+import { filmsStore } from '@store';
+import { observer } from 'mobx-react-lite';
 
-function FilmsGrid() {
-  const filmsData = useAppSelector(selectFilms);
-
-  const sort = useAppSelector(selectSort);
-  const isOrderAscending = useAppSelector(selectIsOrderAscending);
-  const page = useAppSelector(selectPage);
-
-  const dispatch = useAppDispatch();
+const FilmsGrid = observer(() => {
+  const sort = filmsStore.sort;
+  const isLoading = filmsStore.isLoading;
+  const isOrderAscending = filmsStore.isOrderAscending;
+  // const page = filmsStore.page;
 
   useEffect(() => {
-    dispatch(updateFilms());
-  }, [sort, isOrderAscending, page, dispatch]);
+    filmsStore.updateFilms();
+  }, []);
 
   useEffect(() => {
     // ! переделать
     document.documentElement.scrollTop = 0;
-  }, [sort, isOrderAscending, dispatch]);
+  }, [sort, isOrderAscending]);
 
-  const { films, isLoading, error } = filmsData;
+  const films = filmsStore.films;
 
   // if (isLoading || error) {
   //   return (
@@ -55,19 +45,19 @@ function FilmsGrid() {
       const windowHeight = window.innerHeight;
 
       if (windowHeight + top + 600 >= height) {
-        dispatch(changeCurrentPage());
+        filmsStore.changeCurrentPage();
       }
     }
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [dispatch]);
+  }, []);
 
   return (
     <Grid container spacing={1}>
       {films.map((film) => (
-        <Grid item key={film.id}>
+        <Grid item xs={12} sm={6} md={4} lg={3} key={film.id}>
           <FilmCard
             id={film.id}
             title={film.title}
@@ -76,8 +66,9 @@ function FilmsGrid() {
           />
         </Grid>
       ))}
+      {isLoading && <CircularProgress />}
     </Grid>
   );
-}
+});
 
 export default FilmsGrid;

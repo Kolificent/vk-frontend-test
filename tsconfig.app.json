@@ -10,7 +10,7 @@
       "@*": ["src/*"],
       "@ui/*": ["src/components/ui/*"],
       "@components/*": ["src/components/*"],
-      "@store": ["src/redux/store"],
+      "@store": ["src/store"],
       "@utils": ["src/utils"],
       "@slices/*": ["src/redux/slices/*"],
       "@constants/*": ["src/constants/*"],

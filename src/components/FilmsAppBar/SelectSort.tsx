@@ -7,25 +7,23 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '@store';
 import { SORT_OPTIONS } from '@constants';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
-import { selectIsOrderAscending, selectSort } from '@selectors/pagination';
-import { changeOrder, changeSort } from '@slices/paginationReducer';
+import { filmsStore } from '@store';
+import { observer } from 'mobx-react-lite';
 
 const SORT_LABEL = 'Сортировать по';
 
-function SelectSort() {
-  const sort = useAppSelector(selectSort);
-  const isOrderAscending = useAppSelector(selectIsOrderAscending);
-  const dispatch = useAppDispatch();
+const SelectSort = observer(() => {
+  const sort = filmsStore.sort;
+  const isOrderAscending = filmsStore.isOrderAscending;
 
   function handleChangeSort(e: SelectChangeEvent) {
-    dispatch(changeSort(+e.target.value));
+    filmsStore.changeSort(+e.target.value);
   }
 
   function handleOrderButton() {
-    dispatch(changeOrder(!isOrderAscending));
+    filmsStore.changeOrder(!isOrderAscending);
   }
 
   return (
@@ -65,6 +63,6 @@ function SelectSort() {
       </IconButton>
     </Box>
   );
-}
+});
 
 export default SelectSort;

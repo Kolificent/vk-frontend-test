@@ -13,21 +13,20 @@ import {
 import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { useAppDispatch } from '@store';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Film } from '@types';
-import { deleteFilm } from '@slices/filmsReducer';
+
 import { useState } from 'react';
+import { filmsStore } from '@store';
 
 function FilmCard({ id, poster_path, vote_average, title }: Film) {
-  const dispatch = useAppDispatch();
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
   const [editedVoteAverage, setEditedVoteAverage] = useState(vote_average);
 
   function handleDeleteButton() {
-    dispatch(deleteFilm(id));
+    filmsStore.deleteFilm(id);
   }
 
   function handleEditButton() {
@@ -45,12 +44,12 @@ function FilmCard({ id, poster_path, vote_average, title }: Film) {
   }
 
   return (
-    <Card sx={{ width: '400px' }}>
+    <Card>
       <Paper>
         <CardActionArea>
           <Link to={`../film/${id}`} relative="path">
             <CardMedia
-              sx={{ height: '600px' }}
+              sx={{ height: '400px' }}
               component="img"
               image={'https://image.tmdb.org/t/p/w400' + poster_path}
               alt={title}
@@ -74,7 +73,7 @@ function FilmCard({ id, poster_path, vote_average, title }: Film) {
               </>
             ) : (
               <>
-                <Typography variant="h3" component="h3" fontSize="24px">
+                <Typography variant="h3" component="h3" fontSize="20px">
                   {title}
                 </Typography>
                 <Typography fontSize="14px" variant="caption">

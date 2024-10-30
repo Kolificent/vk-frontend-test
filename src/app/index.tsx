@@ -1,4 +1,4 @@
-import { Box, CssBaseline } from '@mui/material';
+import { Box, Container, CssBaseline } from '@mui/material';
 // import LoginDialog from '@components/dialogs/LoginDialog';
 import FilmsGrid from '@components/FilmsGrid';
 import FilmsAppBar from '@components/FilmsAppBar';
@@ -15,6 +15,14 @@ function App() {
       <CssBaseline />
       {/*<LoginDialog /> */}
       <FilmsAppBar />
+      <Container
+        maxWidth="lg" // Это ограничит ширину контейнера на больших экранах
+        sx={{
+          padding: 1,
+        }}
+      >
+        <FilmsGrid />
+      </Container>
       <Box
         component="main"
         display="flex"
@@ -23,9 +31,7 @@ function App() {
         p={3}
         width="100%"
         flexGrow={1}
-      >
-        <FilmsGrid />
-      </Box>
+      ></Box>
     </Box>
   );
 }
