@@ -27,11 +27,15 @@ function FilmsAppBar() {
   }
 
   const accountButton = isUserAuthenticated ? (
-    <IconButton color="inherit" onClick={handleLogoutButton}>
+    <IconButton
+      color="inherit"
+      aria-label="logout"
+      onClick={handleLogoutButton}
+    >
       <LogoutIcon />
     </IconButton>
   ) : (
-    <IconButton color="inherit" onClick={handleLoginButton}>
+    <IconButton color="inherit" aria-label="login" onClick={handleLoginButton}>
       <AccountCircleIcon />
     </IconButton>
   );

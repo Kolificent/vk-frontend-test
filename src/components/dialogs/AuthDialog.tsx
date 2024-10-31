@@ -50,7 +50,12 @@ const AuthDialog = observer(() => {
           <br />
           Получить токен аутентификации можно здесь:
           <br />
-          <a href={TMDB_AUTH_URL} target="_blank" rel="noopener noreferrer">
+          <a
+            href={TMDB_AUTH_URL}
+            aria-label="apiLink"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {TMDB_AUTH_URL}
           </a>
           <br />

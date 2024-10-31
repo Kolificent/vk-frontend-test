@@ -70,7 +70,7 @@ class FilmsStore {
     }) as Array<Film>;
 
     // this.films = localFilms;
-    // по какой-то причине бэк присылает дубликаты
+    // по какой-то причине бэк в ответ присылает дубликаты
     this.films = removeDuplicateFilms(localFilms);
   }
 

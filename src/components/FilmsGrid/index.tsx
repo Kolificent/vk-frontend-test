@@ -20,8 +20,6 @@ const FilmsGrid = observer(() => {
     filmsStore.fetchFilms();
   }, []);
 
-  const isFilmsCountLow = films.length < 20;
-
   useEffect(() => {
     scrollToTop();
   }, [sort, isOrderAscending]);
@@ -76,9 +74,29 @@ const FilmsGrid = observer(() => {
         </Box>
       )}
       {isLoading && (
-        <Box display="flex" justifyContent="center">
+        <Box
+          style={{
+            position: 'fixed',
+            bottom: '2rem',
+            right: '2rem',
+            zIndex: 1000,
+          }}
+        >
           <CircularProgress />
         </Box>
+      )}
+      {isLoading && (
+        <Typography
+          color="primary"
+          style={{
+            position: 'fixed',
+            bottom: '2rem',
+            left: '2rem',
+            zIndex: 1000,
+          }}
+        >
+          Загрузка...
+        </Typography>
       )}
       {isScrollButtonVisible && (
         <Button
