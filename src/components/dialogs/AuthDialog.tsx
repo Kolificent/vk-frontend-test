@@ -11,8 +11,6 @@ import dialogStore from '@store/dialogStore';
 import { setAuthToken } from '@utils/authToken';
 import { observer } from 'mobx-react-lite';
 
-const TMDB_AUTH_URL = 'https://developer.themoviedb.org/docs/getting-started';
-
 const AuthDialog = observer(() => {
   const isOpen = dialogStore.isOpen;
 
