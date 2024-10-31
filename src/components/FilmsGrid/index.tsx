@@ -20,6 +20,8 @@ const FilmsGrid = observer(() => {
     filmsStore.fetchFilms();
   }, []);
 
+  const isFilmsCountLow = films.length < 20;
+
   useEffect(() => {
     scrollToTop();
   }, [sort, isOrderAscending]);

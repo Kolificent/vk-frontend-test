@@ -1,3 +1,4 @@
+import { TMDB_AUTH_URL } from '@constants';
 import {
   Button,
   Dialog,

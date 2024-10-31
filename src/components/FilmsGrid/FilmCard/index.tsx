@@ -13,6 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
+import HideImageIcon from '@mui/icons-material/HideImage';
 import { CARD_HEIGHT } from '@constants';
 import { Film } from '@types';
 import { filmsStore } from '@store/filmsStore';
@@ -55,12 +56,26 @@ function FilmCard({ id, poster_path, vote_average, title }: Film) {
   return (
     <Card>
       <Paper>
-        <CardMedia
-          sx={{ height: CARD_HEIGHT }}
-          component="img"
-          image={'https://image.tmdb.org/t/p/w400' + poster_path}
-          alt={title}
-        />
+        {poster_path ? (
+          <CardMedia
+            sx={{ height: CARD_HEIGHT }}
+            component="img"
+            image={'https://image.tmdb.org/t/p/w400' + poster_path}
+            alt={title}
+          />
+        ) : (
+          <Box
+            display="flex"
+            width="100%"
+            height={CARD_HEIGHT}
+            alignItems="center"
+            flexDirection="column"
+            justifyContent="center"
+          >
+            <HideImageIcon />
+            Нет изображения
+          </Box>
+        )}
         <Box display="flex">
           <CardContent sx={{ flexGrow: 1 }}>
             {isEditing ? (

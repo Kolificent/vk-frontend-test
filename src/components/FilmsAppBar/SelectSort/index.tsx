@@ -30,6 +30,7 @@ const SelectSort = observer(() => {
       <FormControl fullWidth size="small" sx={{ color: 'white' }}>
         <InputLabel sx={{ color: 'white' }}>{SORT_LABEL}</InputLabel>
         <Select
+          aria-label="selectSort"
           value={sort.toString()}
           label={SORT_LABEL}
           onChange={handleChangeSort}

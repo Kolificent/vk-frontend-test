@@ -6,7 +6,7 @@
 
 ## Стэк:
 
-React, TypeScript, MobX, CSS-модули, Vite, Jest, React Testing Library, axios, Material UI
+React, TypeScript, MobX, CSS-модули, Vite, Jest (Vitest), React Testing Library, axios, Material UI
 
 ## Использованный API:
 
@@ -19,7 +19,7 @@ TMDB - https://developer.themoviedb.org/reference/intro/getting-started
 - Бесконечный плавный скролл
 - Постепенная подгрузка элементов
 - Локальное удаление и редактирование (в сторе стейт-менеджера)
-- Покрытие unit-тестами
+- Модульное тестирование
 - Аутентификация
 - Варианты сортировки
 - Индикация подрузки данных (лоадер)
@@ -31,11 +31,14 @@ npm i
 npm run dev
 ```
 
-Также можно запустить **деплой** проекта: -
+Также можно запустить **деплой** проекта: - [Netlify](https://vk-test-kolificent.netlify.app/)
 
 И **видео-демо** - [Google Drive](https://drive.google.com/file/d/10NrG4SIJw2Sds5hTQ-RnwPUpuFnJWKXA/view?usp=sharing)
 
 ## Вопросы и уточнения
+
+_По какой-то причине API TMDB периодически присылает дубликаты фильмов, в связи с этим реализована функция проверки на дубликаты, но из-за этого замедляется приложение.
+Подробнее в `filmsStore.ts -> validateFilms()`._
 
 Обоснования выбора API TMDB:
 

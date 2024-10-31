@@ -1,6 +1,7 @@
 import FilmsAPI from '@api/filmsApi';
 import { DEFAULT_FILMS_LIST, DEFAULT_PAGINATION } from '@constants';
 import { Film, Pagination } from '@types';
+import removeDuplicateFilms from '@utils/removeDuplicateFilms';
 import { makeAutoObservable, runInAction } from 'mobx';
 
 class FilmsStore {
@@ -67,11 +68,18 @@ class FilmsStore {
         ? this.editedFilmsInfo.find((editedFilm) => editedFilm.id === film.id)
         : film;
     }) as Array<Film>;
-    this.films = localFilms;
+
+    // this.films = localFilms;
+    // по какой-то причине бэк присылает дубликаты
+    this.films = removeDuplicateFilms(localFilms);
   }
 
   deleteFilm(id: Film['id']) {
+    const filmsOnPageCount = 20;
     this.deletedFilmIds = [...this.deletedFilmIds, id];
+    if (this.films.length < filmsOnPageCount) {
+      filmsStore.changeCurrentPage();
+    }
     this.validateFilms();
   }
 
