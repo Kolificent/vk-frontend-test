@@ -31,11 +31,13 @@ npm i
 npm run dev
 ```
 
-Также можно запустить **деплой** проекта: - [Netlify](https://vk-test-kolificent.netlify.app/)
+## Деплой
+
+Деплой на сервисе Netlify - [Netlify](https://vk-test-kolificent.netlify.app/)
 
 ## Видео-демо
 
-https://github.com/user-attachments/assets/6283e5a9-c529-47c4-af5c-5dea72babc3a
+https://github.com/user-attachments/assets/cf24e917-f74f-4313-980a-8002ce078e77
 
 Или ссылка на облако - [Google Drive](https://drive.google.com/file/d/10NrG4SIJw2Sds5hTQ-RnwPUpuFnJWKXA/view?usp=sharing)
 
@@ -45,10 +47,14 @@ https://github.com/user-attachments/assets/6283e5a9-c529-47c4-af5c-5dea72babc3a
 npm test
 ```
 
+Все компоненты покрыты тестами.
+
 ## Вопросы и уточнения
 
 _По какой-то причине API TMDB периодически присылает дубликаты фильмов (даже в пределах одной страницы), в связи с этим реализована функция проверки на дубликаты, но из-за этого замедляется приложение. Изначально в проекте не было этой проверки.
 Подробнее в `filmsStore.ts -> validateFilms()`._
+
+Ранее в проекте использовался Redux заместо MobX.
 
 Обоснования выбора API TMDB:
 
