@@ -33,7 +33,7 @@ npm run dev
 
 ## Деплой
 
-Деплой на сервисе Netlify - [Netlify](https://vk-test-kolificent.netlify.app/)
+Деплой на сервисе Netlify - https://vk-test-kolificent.netlify.app
 
 ## Видео-демо
 
