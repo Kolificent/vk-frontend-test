@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Grid } from '@mui/material';
+import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { CARD_HEIGHT } from '@constants';
 import useThrottle from '@hooks/useThrottle';
@@ -48,9 +48,7 @@ const FilmsGrid = observer(() => {
     };
   }, [throttledHandleScroll]);
 
-  const cardsContent = error ? (
-    error
-  ) : (
+  const cardsContent = (
     <Grid container spacing={1}>
       {films.map((film) => {
         return (
@@ -70,6 +68,11 @@ const FilmsGrid = observer(() => {
   return (
     <Box display="flex" flexDirection="column" gap={2}>
       {cardsContent}
+      {error && (
+        <Box display="flex" justifyContent="center">
+          <Typography>{error}</Typography>
+        </Box>
+      )}
       {isLoading && (
         <Box display="flex" justifyContent="center">
           <CircularProgress />
@@ -78,6 +81,7 @@ const FilmsGrid = observer(() => {
       {isScrollButtonVisible && (
         <Button
           variant="contained"
+          aria-label="scrollToTopButton"
           startIcon={<ArrowUpwardIcon />}
           color="primary"
           onClick={scrollToTop}

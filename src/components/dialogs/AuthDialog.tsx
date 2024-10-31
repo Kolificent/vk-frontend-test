@@ -69,14 +69,19 @@ const AuthDialog = observer(() => {
           margin="dense"
           name="token"
           label="Токен"
+          aria-label="token"
           type="text"
           fullWidth
           variant="standard"
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Отмена</Button>
-        <Button type="submit">Ок</Button>
+        <Button aria-label="cancel" onClick={handleClose}>
+          Отмена
+        </Button>
+        <Button type="submit" aria-label="confirm">
+          Ок
+        </Button>
       </DialogActions>
     </Dialog>
   );

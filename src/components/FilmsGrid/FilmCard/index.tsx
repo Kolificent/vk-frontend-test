@@ -67,13 +67,13 @@ function FilmCard({ id, poster_path, vote_average, title }: Film) {
               <>
                 <Input
                   value={tempTitle}
-                  inputProps={{ 'aria-label': 'description' }}
+                  inputProps={{ 'aria-label': 'tempTitle' }}
                   onChange={(e) => setTempTitle(e.target.value)}
                 />
                 <Input
                   value={tempVoteAverage}
                   type="number"
-                  inputProps={{ 'aria-label': 'description' }}
+                  inputProps={{ 'aria-label': 'tempVoteAverage' }}
                   onChange={(e) => setTempVoteAverage(+e.target.value)}
                 />
               </>
@@ -97,10 +97,18 @@ function FilmCard({ id, poster_path, vote_average, title }: Film) {
           <CardActions>
             {isEditing ? (
               <>
-                <IconButton onClick={handleConfirmButton} color="primary">
+                <IconButton
+                  onClick={handleConfirmButton}
+                  aria-label="confirm"
+                  color="primary"
+                >
                   <CheckIcon />
                 </IconButton>
-                <IconButton onClick={handleCancelButton} color="secondary">
+                <IconButton
+                  onClick={handleCancelButton}
+                  aria-label="cancel"
+                  color="secondary"
+                >
                   <ClearIcon />
                 </IconButton>
               </>
